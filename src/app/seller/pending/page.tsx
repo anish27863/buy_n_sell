@@ -8,7 +8,7 @@ export default function SellerPendingPage() {
         <div className="max-w-lg">
           <h1 className="text-4xl font-serif mb-6 text-[var(--color-warning)] italic">Account Pending Review.</h1>
           <p className="text-[var(--color-text-secondary)] leading-relaxed mb-8">
-            Your merchant application is currently under review by the Bazaar administrators. 
+            Your merchant application is currently under review by the Buy&Sell administrators. 
             We curate our sellers carefully to ensure the highest quality marketplace. You will be able to access your dashboard once approved.
           </p>
           <form action="/api/auth/logout" method="POST">

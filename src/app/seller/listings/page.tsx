@@ -2,13 +2,13 @@ import { PageTransition } from '@/components/layout/PageTransition';
 import { db } from '@/db';
 import { products, sellerProfiles } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import { headers } from 'next/headers';
+import { getSession } from '@/lib/auth';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 
 export default async function SellerListings() {
-  const h = await headers();
-  const userId = parseInt(h.get('x-user-id') || '0');
+  const session = await getSession();
+  const userId = session?.id || 0;
 
   let items = [];
   try {

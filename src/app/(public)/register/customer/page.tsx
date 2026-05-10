@@ -38,7 +38,7 @@ export default function CustomerRegisterPage() {
     <PageTransition>
       <div className="min-h-screen px-8 flex items-center justify-center">
         <div className="bg-[var(--color-surface)]/80 backdrop-blur-xl p-10 rounded-2xl border border-[var(--color-border)] shadow-2xl max-w-md w-full">
-          <h2 className="text-3xl font-serif mb-2">Join Bazaar.</h2>
+          <h2 className="text-3xl font-serif mb-2">Join Buy&Sell.</h2>
           <p className="text-[var(--color-text-muted)] mb-8">Register as a customer.</p>
           
           <form onSubmit={handleRegister} className="flex flex-col gap-5">

@@ -8,7 +8,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
 
       <header className="absolute top-0 w-full z-40 px-8 py-6 flex justify-between items-center bg-transparent">
         <Link href="/" className="text-2xl font-serif font-bold tracking-tight text-[var(--color-text-primary)]">
-          BAZAAR.
+          BUY&SELL.
         </Link>
         <nav className="flex gap-8 text-sm uppercase tracking-widest text-[var(--color-text-secondary)]">
           <Link href="/login?role=seller" className="hover:text-[var(--color-text-primary)] transition-colors">Seller Login</Link>

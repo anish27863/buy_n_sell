@@ -25,22 +25,19 @@ export async function POST(request: Request) {
 
     const passwordHash = await bcrypt.hash(password, 12);
 
-    // Use transaction for multiple inserts
-    const [newUser] = await db.transaction(async (tx) => {
-      const [u] = await tx.insert(users).values({
-        username,
-        passwordHash,
-        role: 'seller',
-      }).returning();
+    // Insert user first
+    const [newUser] = await db.insert(users).values({
+      username,
+      passwordHash,
+      role: 'seller',
+    }).returning();
 
-      await tx.insert(sellerProfiles).values({
-        userId: u.id,
-        shopName,
-        description,
-        approvalStatus: 'pending',
-      });
-
-      return [u];
+    // Insert seller profile
+    await db.insert(sellerProfiles).values({
+      userId: newUser.id,
+      shopName,
+      description,
+      approvalStatus: 'pending',
     });
 
     await setAuthCookie({
@@ -51,7 +48,8 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ success: true, redirect: '/seller/pending' });
-  } catch (error) {
-    return NextResponse.json({ error: 'Invalid data' }, { status: 400 });
+  } catch (error: any) {
+    console.error('Seller Registration Error:', error);
+    return NextResponse.json({ error: error?.message || 'Invalid data' }, { status: 400 });
   }
 }

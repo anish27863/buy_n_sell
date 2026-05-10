@@ -6,7 +6,7 @@ export default function SellerLayout({ children }: { children: React.ReactNode }
     <div className="min-h-screen flex flex-col bg-[var(--color-bg-primary)]">
       <header className="sticky top-0 z-40 w-full border-b border-[var(--color-border)] bg-[var(--color-bg-primary)]/80 backdrop-blur-md px-8 py-4 flex justify-between items-center">
         <Link href="/seller/dashboard" className="text-2xl font-serif font-bold tracking-tight text-[var(--color-accent)]">
-          BAZAAR. <span className="text-sm font-sans tracking-widest uppercase text-[var(--color-text-muted)] italic">Merchant</span>
+          BUY&SELL. <span className="text-sm font-sans tracking-widest uppercase text-[var(--color-text-muted)] italic">Merchant</span>
         </Link>
         <nav className="flex items-center gap-8 text-sm font-medium text-[var(--color-text-secondary)]">
           <Link href="/seller/dashboard" className="hover:text-[var(--color-text-primary)] transition-colors">Dashboard</Link>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Bazaar | Discover. Negotiate. Own.",
+  title: "Buy&Sell | Discover. Negotiate. Own.",
   description: "High-end marketplace meets art-house publication.",
 };
 

@@ -4,6 +4,7 @@ import { PageTransition } from '@/components/layout/PageTransition';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function NewListingPage() {
   const [title, setTitle] = useState('');
@@ -14,10 +15,31 @@ export default function NewListingPage() {
   const [tags, setTags] = useState('');
   const [images, setImages] = useState<string[]>([]); // Scaffold for UploadThing
 
-  const handleList = (e: React.FormEvent) => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleList = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Scaffold API post here
-    alert('This would list the product to the DB via /api/products');
+    setLoading(true);
+    
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, description, category, mrp: parseFloat(mrp), quantityAvailable: parseInt(quantity), tags: tags.split(',').map(t => t.trim()) })
+      });
+      
+      if (res.ok) {
+        router.push('/seller/listings');
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to create listing');
+      }
+    } catch (err) {
+      alert('An error occurred');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,11 +64,12 @@ export default function NewListingPage() {
                   className="w-full bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md p-2 text-sm text-[var(--color-text-primary)] h-10 focus:outline-none focus:border-[var(--color-accent)]"
                 >
                   <option value="">Select Category...</option>
-                  <option value="Antiques">Antiques</option>
-                  <option value="Art">Art</option>
-                  <option value="Fashion">Fashion</option>
-                  <option value="Jewelry">Jewelry</option>
-                  <option value="Watches">Watches</option>
+                  <option value="chips">Chips</option>
+                  <option value="drinks">Drinks</option>
+                  <option value="biscuits">Biscuits</option>
+                  <option value="namkeen">Namkeen</option>
+                  <option value="medicine">Medicine</option>
+                  <option value="others">Others</option>
                 </select>
               </div>
               <div>
@@ -81,7 +104,9 @@ export default function NewListingPage() {
               </div>
             </div>
 
-            <Button type="submit" className="w-full py-4 text-lg font-serif tracking-wide italic">Publish Listing</Button>
+            <Button type="submit" disabled={loading} className="w-full py-4 text-lg font-serif tracking-wide italic">
+              {loading ? 'Publishing...' : 'Publish Listing'}
+            </Button>
           </form>
 
           {/* Live Preview Panel */}

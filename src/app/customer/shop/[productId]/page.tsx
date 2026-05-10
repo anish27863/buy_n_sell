@@ -5,8 +5,9 @@ import { eq } from 'drizzle-orm';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 
-export default async function ProductDetailPage({ params }: { params: { productId: string } }) {
-  const id = parseInt(params.productId);
+export default async function ProductDetailPage({ params }: { params: Promise<{ productId: string }> }) {
+  const { productId } = await params;
+  const id = parseInt(productId);
   if (isNaN(id)) return notFound();
 
   let product = null;

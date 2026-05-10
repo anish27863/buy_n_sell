@@ -67,7 +67,7 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="bg-[var(--color-surface)]/80 backdrop-blur-xl p-10 rounded-2xl border border-[var(--color-border)] shadow-2xl lg:ml-auto max-w-md w-full"
           >
-            <h2 className="text-3xl font-serif mb-2">Enter the Bazaar.</h2>
+            <h2 className="text-3xl font-serif mb-2">Enter Buy&Sell.</h2>
             <p className="text-[var(--color-text-muted)] mb-8">Login as a customer to continue.</p>
             
             <form onSubmit={handleLogin} className="flex flex-col gap-5">
@@ -98,7 +98,7 @@ export default function HomePage() {
             </form>
 
             <div className="mt-6 pt-6 border-t border-[var(--color-border)] text-center text-sm text-[var(--color-text-muted)]">
-              New to Bazaar?{' '}
+              New to Buy&Sell?{' '}
               <a href="/register/customer" className="text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors border-b border-transparent hover:border-[var(--color-accent)] pb-0.5">
                 Apply for access
               </a>

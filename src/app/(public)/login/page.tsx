@@ -84,7 +84,7 @@ function LoginForm() {
 
       {role === 'seller' && (
         <div className="mt-6 pt-6 border-t border-[var(--color-border)] text-center text-sm text-[var(--color-text-muted)]">
-          Want to sell on Bazaar?{' '}
+          Want to sell on Buy&Sell?{' '}
           <a href="/register/seller" className="text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors border-b border-transparent hover:border-[var(--color-accent)] pb-0.5">
             Apply as Merchant
           </a>

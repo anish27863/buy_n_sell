@@ -2,11 +2,11 @@ import { PageTransition } from '@/components/layout/PageTransition';
 import { db } from '@/db';
 import { orders, products, users } from '@/db/schema';
 import { eq, desc } from 'drizzle-orm';
-import { headers } from 'next/headers';
+import { getSession } from '@/lib/auth';
 
 export default async function SellerDashboard() {
-  const h = await headers();
-  const userId = parseInt(h.get('x-user-id') || '0');
+  const session = await getSession();
+  const userId = session?.id || 0;
 
   let recentOrders = [];
   try {

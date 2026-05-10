@@ -5,14 +5,14 @@ export default function InfoPage() {
     <PageTransition>
       <div className="min-h-screen pt-32 pb-20 px-8 max-w-4xl mx-auto">
         <h1 className="text-5xl md:text-7xl font-serif mb-12 border-b border-[var(--color-border)] pb-8">
-          The Philosophy of <span className="text-[var(--color-accent)] italic">Bazaar.</span>
+          The Philosophy of <span className="text-[var(--color-accent)] italic">Buy&Sell.</span>
         </h1>
         
         <div className="space-y-16 text-lg text-[var(--color-text-secondary)] leading-relaxed font-light">
           <section>
-            <h2 className="text-3xl font-serif text-[var(--color-text-primary)] mb-6">What is Bazaar?</h2>
+            <h2 className="text-3xl font-serif text-[var(--color-text-primary)] mb-6">What is Buy&Sell?</h2>
             <p>
-              Bazaar is an experiment in digital commerce. We reject the sterile, impersonal nature of modern online shopping. 
+              Buy&Sell is an experiment in digital commerce. We reject the sterile, impersonal nature of modern online shopping. 
               Here, every transaction is a conversation. Prices are not fixed; they are discovered through mutual agreement.
             </p>
           </section>
