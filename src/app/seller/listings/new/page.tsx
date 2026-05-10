@@ -3,6 +3,7 @@
 import { PageTransition } from '@/components/layout/PageTransition';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { ImageUploader } from '@/components/ui/ImageUploader';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -26,7 +27,7 @@ export default function NewListingPage() {
       const res = await fetch('/api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, description, category, mrp: parseFloat(mrp), quantityAvailable: parseInt(quantity), tags: tags.split(',').map(t => t.trim()) })
+        body: JSON.stringify({ title, description, category, mrp: parseFloat(mrp), quantityAvailable: parseInt(quantity), tags: tags.split(',').map(t => t.trim()), images })
       });
       
       if (res.ok) {
@@ -98,10 +99,8 @@ export default function NewListingPage() {
             </div>
 
             <div className="pt-4 border-t border-[var(--color-border)]">
-              <label className="text-sm text-[var(--color-text-secondary)] block mb-4">Images (UploadThing placeholder)</label>
-              <div className="w-full h-32 border-2 border-dashed border-[var(--color-border)] rounded-xl flex items-center justify-center text-[var(--color-text-muted)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors cursor-pointer bg-[var(--color-surface)]">
-                Drag & Drop images here
-              </div>
+              <label className="text-sm text-[var(--color-text-secondary)] block mb-3">Product Images</label>
+              <ImageUploader images={images} onChange={setImages} />
             </div>
 
             <Button type="submit" disabled={loading} className="w-full py-4 text-lg font-serif tracking-wide italic">
@@ -114,8 +113,12 @@ export default function NewListingPage() {
             <div className="sticky top-24">
               <h3 className="font-serif text-lg mb-4 text-[var(--color-text-secondary)]">Live Preview</h3>
               <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl p-4">
-                <div className="aspect-[4/5] bg-[var(--color-bg-tertiary)] rounded-lg mb-4 flex items-center justify-center text-[var(--color-text-muted)] italic">
-                  Image Preview
+                <div className="aspect-[4/5] bg-[var(--color-bg-tertiary)] rounded-lg mb-4 overflow-hidden">
+                  {images[0] ? (
+                    <img src={images[0]} alt="Preview" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-[var(--color-text-muted)] italic">Image Preview</div>
+                  )}
                 </div>
                 <div className="text-sm text-[var(--color-accent)] uppercase tracking-widest mb-1">{category || 'Category'}</div>
                 <h4 className="font-serif text-lg leading-tight mb-3 text-[var(--color-text-primary)] line-clamp-2">{title || 'Product Title'}</h4>

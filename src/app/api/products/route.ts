@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { title, description, category, mrp, quantityAvailable, tags } = body;
+    const { title, description, category, mrp, quantityAvailable, tags, images } = body;
 
     if (!title || !category || !mrp || !quantityAvailable) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -32,6 +32,7 @@ export async function POST(request: Request) {
       mrp: mrp.toString(),
       quantityAvailable,
       tags,
+      images: images && images.length > 0 ? images : null,
       isActive: true,
     }).returning();
 
