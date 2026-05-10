@@ -1,5 +1,6 @@
 import { PageTransition } from '@/components/layout/PageTransition';
 import { ChatBox } from '@/components/chat/ChatBox';
+import { MarkDeliveredButton } from '@/components/chat/MarkDeliveredButton';
 import { db } from '@/db';
 import { orders, products, users } from '@/db/schema';
 import { eq } from 'drizzle-orm';
@@ -49,8 +50,11 @@ export default async function SellerChatPage({ params }: { params: Promise<{ ord
               {order.status === 'delivered' && ' · ✅ Delivered'}
             </p>
           </div>
-          <div className="text-xs text-[var(--color-text-muted)] uppercase tracking-widest">
-            Order #{order.id}
+          <div className="flex items-center gap-4">
+            <MarkDeliveredButton orderId={oid} currentStatus={order.status} />
+            <div className="text-xs text-[var(--color-text-muted)] uppercase tracking-widest">
+              Order #{order.id}
+            </div>
           </div>
         </div>
 
