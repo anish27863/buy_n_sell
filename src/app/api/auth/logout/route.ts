@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { logout } from '@/lib/auth';
 
-export async function POST() {
+export async function POST(request: Request) {
   await logout();
-  return NextResponse.redirect(new URL('/', process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'));
+  return NextResponse.redirect(new URL('/', request.url));
 }
