@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/reset-listings",
+      "schedule": "30 3 * * *"
+    }
+  ]
+}
