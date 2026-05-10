@@ -10,7 +10,7 @@ export default async function SellerListings() {
   const session = await getSession();
   const userId = session?.id || 0;
 
-  let items = [];
+  let items: any[] = [];
   try {
     const [seller] = await db.select().from(sellerProfiles).where(eq(sellerProfiles.userId, userId));
     if (seller) {

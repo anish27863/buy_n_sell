@@ -8,7 +8,7 @@ export default async function SellerDashboard() {
   const session = await getSession();
   const userId = session?.id || 0;
 
-  let recentOrders = [];
+  let recentOrders: any[] = [];
   try {
     // In real app, we'd filter by seller's profile ID instead of user ID directly, 
     // but for scaffold we just show the structure.

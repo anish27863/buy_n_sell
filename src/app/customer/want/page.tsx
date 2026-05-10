@@ -5,7 +5,7 @@ import { eq, desc } from 'drizzle-orm';
 import { Button } from '@/components/ui/Button';
 
 export default async function WantPage() {
-  let posts = [];
+  let posts: any[] = [];
   try {
     posts = await db
       .select({

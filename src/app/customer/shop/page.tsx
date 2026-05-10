@@ -12,7 +12,7 @@ export default async function ShopPage() {
   // For now, let's fetch active products with quantity > 0
   
   // NOTE: Neon requires the DB URL to be valid to run this. If it's empty, this page will error.
-  let items = [];
+  let items: any[] = [];
   try {
     items = await db
       .select({
