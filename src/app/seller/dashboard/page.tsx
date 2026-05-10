@@ -1,32 +1,59 @@
 import { PageTransition } from '@/components/layout/PageTransition';
 import { db } from '@/db';
-import { orders, products, users } from '@/db/schema';
-import { eq, desc } from 'drizzle-orm';
+import { orders, products, users, sellerProfiles } from '@/db/schema';
+import { eq, desc, and, count, sum } from 'drizzle-orm';
 import { getSession } from '@/lib/auth';
+import Link from 'next/link';
+
+export const dynamic = 'force-dynamic';
 
 export default async function SellerDashboard() {
   const session = await getSession();
   const userId = session?.id || 0;
 
   let recentOrders: any[] = [];
+  let stats = { listings: 0, frozenUnits: 0, activeNegotiations: 0, deliveredToday: 0 };
+
   try {
-    // In real app, we'd filter by seller's profile ID instead of user ID directly, 
-    // but for scaffold we just show the structure.
-    recentOrders = await db
-      .select({
-        id: orders.id,
-        quantity: orders.quantity,
-        status: orders.status,
-        agreedPrice: orders.agreedPrice,
-        productTitle: products.title,
-        customerName: users.username,
-      })
-      .from(orders)
-      .innerJoin(products, eq(orders.productId, products.id))
-      .innerJoin(users, eq(orders.customerId, users.id))
-      .orderBy(desc(orders.createdAt))
-      .limit(10);
-  } catch (e) {}
+    // Get seller profile first
+    const [profile] = await db.select().from(sellerProfiles).where(eq(sellerProfiles.userId, userId));
+
+    if (profile) {
+      // Fetch orders belonging to this seller only
+      recentOrders = await db
+        .select({
+          id: orders.id,
+          quantity: orders.quantity,
+          status: orders.status,
+          agreedPrice: orders.agreedPrice,
+          createdAt: orders.createdAt,
+          productTitle: products.title,
+          customerName: users.username,
+        })
+        .from(orders)
+        .innerJoin(products, eq(orders.productId, products.id))
+        .innerJoin(users, eq(orders.customerId, users.id))
+        .where(eq(orders.sellerId, profile.id))
+        .orderBy(desc(orders.createdAt))
+        .limit(20);
+
+      // Real stats
+      const allProducts = await db.select().from(products).where(eq(products.sellerId, profile.id));
+      const activeListings = allProducts.filter(p => p.isActive).length;
+      const frozenUnits = allProducts.reduce((sum, p) => sum + (p.quantityFrozen || 0), 0);
+      const activeNegotiations = recentOrders.filter(o => o.status === 'negotiating').length;
+      
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const deliveredToday = recentOrders.filter(o =>
+        o.status === 'delivered' && new Date(o.createdAt) >= today
+      ).length;
+
+      stats = { listings: activeListings, frozenUnits, activeNegotiations, deliveredToday };
+    }
+  } catch (e) {
+    console.error('Seller dashboard error:', e);
+  }
 
   return (
     <PageTransition>
@@ -37,26 +64,20 @@ export default async function SellerDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
           <div className="bg-[var(--color-surface)] p-6 rounded-xl border border-[var(--color-border)]">
             <div className="text-sm text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Active Listings</div>
-            <div className="text-3xl font-serif">12</div>
+            <div className="text-3xl font-serif">{stats.listings}</div>
           </div>
           <div className="bg-[var(--color-surface)] p-6 rounded-xl border border-[var(--color-border)]">
             <div className="text-sm text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Frozen Units</div>
-            <div className="text-3xl font-serif text-[var(--color-warning)]">4</div>
+            <div className="text-3xl font-serif text-[var(--color-warning)]">{stats.frozenUnits}</div>
           </div>
           <div className="bg-[var(--color-surface)] p-6 rounded-xl border border-[var(--color-border)]">
-            <div className="text-sm text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Active Negotiations</div>
-            <div className="text-3xl font-serif text-[var(--color-accent)]">3</div>
+            <div className="text-sm text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Negotiating</div>
+            <div className="text-3xl font-serif text-[var(--color-accent)]">{stats.activeNegotiations}</div>
           </div>
           <div className="bg-[var(--color-surface)] p-6 rounded-xl border border-[var(--color-border)]">
             <div className="text-sm text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Delivered Today</div>
-            <div className="text-3xl font-serif text-[var(--color-success)]">7</div>
+            <div className="text-3xl font-serif text-[var(--color-success)]">{stats.deliveredToday}</div>
           </div>
-        </div>
-
-        {/* Next Reset Timer */}
-        <div className="mb-12 bg-gradient-to-r from-[var(--color-surface)] to-transparent p-6 rounded-xl border-l-4 border-[var(--color-accent)]">
-          <h3 className="font-serif text-lg mb-1">Next Inventory Reset</h3>
-          <p className="text-[var(--color-text-secondary)] text-sm">All products will be wiped at 03:30 UTC. Make sure to complete your deliveries.</p>
         </div>
 
         {/* Orders Table */}
@@ -81,17 +102,26 @@ export default async function SellerDashboard() {
               ) : (
                 recentOrders.map(order => (
                   <tr key={order.id} className="hover:bg-[var(--color-bg-secondary)] transition-colors">
-                    <td className="p-4">{order.productTitle}</td>
-                    <td className="p-4">{order.customerName}</td>
+                    <td className="p-4 font-medium">{order.productTitle}</td>
+                    <td className="p-4 text-[var(--color-text-secondary)]">{order.customerName}</td>
                     <td className="p-4">{order.quantity}</td>
                     <td className="p-4">
-                      <span className={`px-2 py-1 rounded text-xs font-medium uppercase tracking-wider ${order.status === 'delivered' ? 'bg-[var(--color-success)]/20 text-[var(--color-success)]' : 'bg-[var(--color-accent)]/20 text-[var(--color-accent)]'}`}>
+                      <span className={`px-2 py-1 rounded text-xs font-medium uppercase tracking-wider ${
+                        order.status === 'delivered' ? 'bg-[var(--color-success)]/20 text-[var(--color-success)]' :
+                        order.status === 'confirmed' ? 'bg-[var(--color-accent)]/20 text-[var(--color-accent)]' :
+                        'bg-[var(--color-warning)]/20 text-[var(--color-warning)]'
+                      }`}>
                         {order.status}
                       </span>
                     </td>
-                    <td className="p-4">{order.agreedPrice ? `$${order.agreedPrice}` : '—'}</td>
+                    <td className="p-4 font-mono">{order.agreedPrice ? `$${Number(order.agreedPrice).toFixed(2)}` : '—'}</td>
                     <td className="p-4">
-                      <a href={`/seller/chat/${order.id}`} className="text-sm font-medium text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors border-b border-[var(--color-text-primary)] hover:border-[var(--color-accent)]">Open Chat</a>
+                      <Link
+                        href={`/seller/chat/${order.id}`}
+                        className="text-sm font-medium text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors border-b border-[var(--color-text-primary)] hover:border-[var(--color-accent)]"
+                      >
+                        Open Chat
+                      </Link>
                     </td>
                   </tr>
                 ))

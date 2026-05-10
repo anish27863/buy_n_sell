@@ -10,6 +10,7 @@ export default function CustomerLayout({ children }: { children: React.ReactNode
         </Link>
         <nav className="flex items-center gap-8 text-sm font-medium text-[var(--color-text-secondary)]">
           <Link href="/customer/shop" className="hover:text-[var(--color-text-primary)] transition-colors">Shop</Link>
+          <Link href="/customer/orders" className="hover:text-[var(--color-text-primary)] transition-colors">My Orders</Link>
           <Link href="/customer/want" className="hover:text-[var(--color-text-primary)] transition-colors">Forum</Link>
           <Link href="/customer/cart" className="hover:text-[var(--color-text-primary)] transition-colors">Cart</Link>
           

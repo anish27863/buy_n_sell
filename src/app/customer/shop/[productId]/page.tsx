@@ -5,6 +5,8 @@ import { eq } from 'drizzle-orm';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 
+import { BuyNowButton } from './BuyNowButton';
+
 export default async function ProductDetailPage({ params }: { params: Promise<{ productId: string }> }) {
   const { productId } = await params;
   const id = parseInt(productId);
@@ -63,14 +65,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
             
-            <form action="/api/orders" method="POST">
-              <input type="hidden" name="productId" value={product.id} />
-              {/* Note: we'd use a client component with a modal for quantity selection, 
-                  but here's a direct Buy Now button for the scaffold */}
-              <Button type="button" disabled={available <= 0} className="px-8 py-4 text-lg font-serif italic shadow-[0_0_20px_var(--color-accent-muted)]">
-                Buy Now &rarr;
-              </Button>
-            </form>
+            <BuyNowButton productId={product.id} available={available} />
           </div>
 
           {/* Seller Info */}
