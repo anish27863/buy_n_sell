@@ -31,7 +31,7 @@ export function MobileNav({ items, brandHref, brand, brandTag }: {
           {/* Backdrop */}
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
           {/* Panel */}
-          <div className="relative ml-auto w-72 h-full bg-[var(--color-bg-primary)] border-l border-[var(--color-border)] flex flex-col p-8 shadow-2xl">
+          <div className="relative ml-auto w-72 h-full bg-[var(--color-bg-primary)] border-l border-[var(--color-border)] flex flex-col p-8 shadow-2xl" style={{ backgroundColor: '#111110' }}>
             <div className="mb-10">
               <Link href={brandHref} onClick={() => setOpen(false)} className="text-2xl font-serif font-bold tracking-tight text-[var(--color-text-primary)]">
                 {brand}

@@ -58,10 +58,10 @@ export default async function SellerDashboard() {
   return (
     <PageTransition>
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-12">
-        <h1 className="text-4xl font-serif mb-8 border-b border-[var(--color-border)] pb-6">Merchant Dashboard</h1>
+        <h1 className="text-2xl md:text-4xl font-serif mb-6 md:mb-8 border-b border-[var(--color-border)] pb-4 md:pb-6">Merchant Dashboard</h1>
         
         {/* Stats Row */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-12">
           <div className="bg-[var(--color-surface)] p-6 rounded-xl border border-[var(--color-border)]">
             <div className="text-sm text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Active Listings</div>
             <div className="text-3xl font-serif">{stats.listings}</div>
@@ -81,7 +81,7 @@ export default async function SellerDashboard() {
         </div>
 
         {/* Orders Table */}
-        <h2 className="text-2xl font-serif mb-6">Active Orders & Negotiations</h2>
+        <h2 className="text-xl md:text-2xl font-serif mb-4 md:mb-6">Active Orders &amp; Negotiations</h2>
         <div className="overflow-x-auto bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)]">
           <table className="w-full text-left">
             <thead className="bg-[var(--color-bg-tertiary)] border-b border-[var(--color-border)] text-sm uppercase tracking-wider text-[var(--color-text-muted)]">
