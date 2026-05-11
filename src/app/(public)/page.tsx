@@ -37,7 +37,7 @@ export default function HomePage() {
 
   return (
     <PageTransition>
-      <div className="relative min-h-screen flex items-center justify-center">
+      <div className="relative min-h-screen flex items-center justify-center overflow-hidden py-24">
         {/* Animated Background Orbs */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--color-accent-muted)] rounded-full mix-blend-screen filter blur-[100px] animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#2A2A26] rounded-full mix-blend-screen filter blur-[120px] opacity-50"></div>
@@ -50,7 +50,7 @@ export default function HomePage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h1 className="text-6xl md:text-8xl font-serif leading-tight mb-6">
+            <h1 className="text-5xl sm:text-6xl md:text-8xl font-serif leading-tight mb-6">
               Discover.<br/>
               <span className="text-[var(--color-text-secondary)] italic">Negotiate.</span><br/>
               Own.

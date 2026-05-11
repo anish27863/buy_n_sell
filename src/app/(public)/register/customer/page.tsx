@@ -38,7 +38,7 @@ export default function CustomerRegisterPage() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen px-4 md:px-8 flex items-center justify-center">
+      <div className="min-h-screen px-4 md:px-8 py-24 flex items-center justify-center">
         <div className="bg-[var(--color-surface)]/80 backdrop-blur-xl p-10 rounded-2xl border border-[var(--color-border)] shadow-2xl max-w-md w-full">
 
           {submitted ? (
