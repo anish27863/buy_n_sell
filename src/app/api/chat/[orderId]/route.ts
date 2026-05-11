@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/db';
-import { chatMessages, chatSessions, users } from '@/db/schema';
+import { chatMessages, chatSessions, users, orders } from '@/db/schema';
 import { eq, asc } from 'drizzle-orm';
 import { getSession } from '@/lib/auth';
 
@@ -9,20 +9,13 @@ export async function GET(request: Request, { params }: { params: Promise<{ orde
   try {
     const { orderId } = await params;
     const session = await getSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const oid = parseInt(orderId);
     let [chatSession] = await db.select().from(chatSessions).where(eq(chatSessions.orderId, oid));
-    
-    // Create session if it doesn't exist (support legacy orders)
     if (!chatSession) {
-      const [newSession] = await db.insert(chatSessions).values({
-        orderId: oid,
-        isActive: true,
-      }).returning();
-      chatSession = newSession;
+      const [ns] = await db.insert(chatSessions).values({ orderId: oid, isActive: true }).returning();
+      chatSession = ns;
     }
 
     const messages = await db
@@ -39,7 +32,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ orde
       .where(eq(chatMessages.sessionId, chatSession.id))
       .orderBy(asc(chatMessages.sentAt));
 
-    return NextResponse.json({ messages, sessionId: chatSession.id });
+    const [order] = await db.select({ status: orders.status }).from(orders).where(eq(orders.id, oid));
+    return NextResponse.json({ messages, sessionId: chatSession.id, orderStatus: order?.status ?? 'negotiating' });
   } catch (error: any) {
     console.error('Chat fetch error:', error);
     return NextResponse.json({ error: 'Failed to fetch messages' }, { status: 500 });
@@ -51,20 +45,20 @@ export async function POST(request: Request, { params }: { params: Promise<{ ord
   try {
     const { orderId } = await params;
     const session = await getSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const oid = parseInt(orderId);
+
+    // Block messages on delivered orders
+    const [order] = await db.select({ status: orders.status }).from(orders).where(eq(orders.id, oid));
+    if (order?.status === 'delivered') {
+      return NextResponse.json({ error: 'This order has been delivered. The chat is now closed.' }, { status: 403 });
+    }
+
     let [chatSession] = await db.select().from(chatSessions).where(eq(chatSessions.orderId, oid));
-    
-    // Create session if it doesn't exist (support legacy orders)
     if (!chatSession) {
-      const [newSession] = await db.insert(chatSessions).values({
-        orderId: oid,
-        isActive: true,
-      }).returning();
-      chatSession = newSession;
+      const [ns] = await db.insert(chatSessions).values({ orderId: oid, isActive: true }).returning();
+      chatSession = ns;
     }
 
     const { message } = await request.json();

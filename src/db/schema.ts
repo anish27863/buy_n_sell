@@ -11,6 +11,16 @@ export const users = pgTable('users', {
   passwordHash: text('password_hash').notNull(),
   role: roleEnum('role').notNull(),
   isBanned: boolean('is_banned').default(false),
+  // Approval flow for customers (sellers use sellerProfiles.approvalStatus)
+  approvalStatus: varchar('approval_status_customer', { length: 20 }).default('approved'), // 'pending' | 'approved' | 'rejected'
+  approvedByAdminId: integer('approved_by_admin_id').references((): any => users.id),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+export const adminProfiles = pgTable('admin_profiles', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').references(() => users.id).notNull(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
   createdAt: timestamp('created_at').defaultNow(),
 });
 
@@ -20,6 +30,7 @@ export const sellerProfiles = pgTable('seller_profiles', {
   shopName: varchar('shop_name', { length: 100 }).notNull(),
   description: text('description'),
   approvalStatus: approvalStatusEnum('approval_status').default('pending'),
+  approvedByAdminId: integer('approved_by_admin_id').references(() => users.id),
   avgRating: numeric('avg_rating', { precision: 3, scale: 2 }).default('0'),
   totalReviews: integer('total_reviews').default(0),
   createdAt: timestamp('created_at').defaultNow(),
@@ -31,7 +42,7 @@ export const products = pgTable('products', {
   title: varchar('title', { length: 200 }).notNull(),
   description: text('description'),
   category: varchar('category', { length: 100 }).notNull(),
-  mrp: numeric('mrp', { precision: 10, scale: 2 }).notNull(),
+  mrp: numeric('mrp', { precision: 10, scale: 2 }),
   quantityAvailable: integer('quantity_available').notNull().default(0),
   quantityFrozen: integer('quantity_frozen').default(0),
   images: text('images').array(),
@@ -78,7 +89,7 @@ export const sellerReviews = pgTable('seller_reviews', {
   id: serial('id').primaryKey(),
   reviewerId: integer('reviewer_id').references(() => users.id).notNull(),
   sellerId: integer('seller_id').references(() => sellerProfiles.id).notNull(),
-  rating: integer('rating').notNull(), // should check 1-5 in application level or trigger
+  rating: integer('rating').notNull(),
   comment: text('comment'),
   createdAt: timestamp('created_at').defaultNow(),
 });

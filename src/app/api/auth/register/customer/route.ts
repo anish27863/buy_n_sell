@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { db } from '@/db';
 import { users } from '@/db/schema';
 import bcrypt from 'bcryptjs';
-import { setAuthCookie } from '@/lib/auth';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
@@ -23,19 +22,14 @@ export async function POST(request: Request) {
 
     const passwordHash = await bcrypt.hash(password, 12);
 
-    const [newUser] = await db.insert(users).values({
+    await db.insert(users).values({
       username,
       passwordHash,
       role: 'customer',
-    }).returning();
-
-    await setAuthCookie({
-      id: newUser.id,
-      username: newUser.username,
-      role: newUser.role as 'customer',
+      approvalStatus: 'pending', // requires admin approval before login
     });
 
-    return NextResponse.json({ success: true, redirect: '/customer/dashboard' });
+    return NextResponse.json({ success: true, message: 'Account created. Please wait for admin approval before logging in.' });
   } catch (error) {
     return NextResponse.json({ error: 'Invalid data' }, { status: 400 });
   }

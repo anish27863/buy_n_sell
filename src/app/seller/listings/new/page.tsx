@@ -45,7 +45,7 @@ export default function NewListingPage() {
 
   return (
     <PageTransition>
-      <div className="max-w-4xl mx-auto px-8 py-12">
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-12">
         <h1 className="text-4xl font-serif mb-8 border-b border-[var(--color-border)] pb-6">Create New Listing</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-12">

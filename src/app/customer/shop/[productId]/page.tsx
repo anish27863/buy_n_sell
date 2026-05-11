@@ -36,7 +36,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
   return (
     <PageTransition>
-      <div className="max-w-6xl mx-auto px-8 py-12 grid grid-cols-1 md:grid-cols-2 gap-16">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-12 grid grid-cols-1 md:grid-cols-2 gap-16">
         {/* Images */}
         <div className="space-y-4">
           <div className="aspect-square bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] overflow-hidden">

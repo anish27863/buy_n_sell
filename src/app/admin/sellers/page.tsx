@@ -28,7 +28,7 @@ export default async function AdminSellersPage() {
 
   return (
     <PageTransition>
-      <div className="max-w-6xl mx-auto px-8 py-12">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-12">
         <h1 className="text-4xl font-serif mb-8 border-b border-[var(--color-border)] pb-6">Merchant Approvals</h1>
         
         <div className="overflow-x-auto bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)]">

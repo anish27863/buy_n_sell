@@ -38,7 +38,7 @@ export default async function MyOrdersPage() {
 
   return (
     <PageTransition>
-      <div className="max-w-5xl mx-auto px-8 py-12">
+      <div className="max-w-5xl mx-auto px-4 md:px-8 py-12">
         <h1 className="text-4xl font-serif mb-8 border-b border-[var(--color-border)] pb-6">My Orders</h1>
 
         <div className="space-y-4">

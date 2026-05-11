@@ -26,6 +26,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Account is banned' }, { status: 403 });
     }
 
+    // Block pending customers from logging in
+    if (role === 'customer' && user.approvalStatus === 'pending') {
+      return NextResponse.json({ error: 'Your account is pending admin approval. Please check back later.' }, { status: 403 });
+    }
+    if (role === 'customer' && user.approvalStatus === 'rejected') {
+      return NextResponse.json({ error: 'Your account application was rejected.' }, { status: 403 });
+    }
+
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
