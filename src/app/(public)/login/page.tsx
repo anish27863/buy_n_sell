@@ -97,7 +97,7 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <PageTransition>
-      <div className="min-h-screen px-8">
+      <div className="min-h-screen px-4 md:px-8">
         <Suspense fallback={<div className="mt-32 text-center text-[var(--color-text-muted)]">Loading...</div>}>
           <LoginForm />
         </Suspense>

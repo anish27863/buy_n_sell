@@ -38,7 +38,7 @@ export default function SellerRegisterPage() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen px-8 py-24 flex items-center justify-center">
+      <div className="min-h-screen px-4 md:px-8 py-24 flex items-center justify-center">
         <div className="bg-[var(--color-surface)]/80 backdrop-blur-xl p-10 rounded-2xl border border-[var(--color-border)] shadow-2xl max-w-lg w-full">
           <h2 className="text-3xl font-serif mb-2 text-[var(--color-accent)] italic">Become a Merchant.</h2>
           <p className="text-[var(--color-text-muted)] mb-8">Apply to sell your curated goods on Buy&Sell.</p>

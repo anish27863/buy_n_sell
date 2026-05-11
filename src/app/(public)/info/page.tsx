@@ -3,7 +3,7 @@ import { PageTransition } from '@/components/layout/PageTransition';
 export default function InfoPage() {
   return (
     <PageTransition>
-      <div className="min-h-screen pt-32 pb-20 px-8 max-w-4xl mx-auto">
+      <div className="min-h-screen pt-32 pb-20 px-4 md:px-8 max-w-4xl mx-auto">
         <h1 className="text-5xl md:text-7xl font-serif mb-12 border-b border-[var(--color-border)] pb-8">
           The Philosophy of <span className="text-[var(--color-accent)] italic">Buy&Sell.</span>
         </h1>

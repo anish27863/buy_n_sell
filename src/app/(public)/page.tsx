@@ -42,7 +42,7 @@ export default function HomePage() {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--color-accent-muted)] rounded-full mix-blend-screen filter blur-[100px] animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#2A2A26] rounded-full mix-blend-screen filter blur-[120px] opacity-50"></div>
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 max-w-7xl w-full mx-auto px-8 gap-16 items-center">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 max-w-7xl w-full mx-auto px-4 md:px-8 gap-16 items-center">
           
           {/* Hero Typography */}
           <motion.div 
@@ -109,7 +109,7 @@ export default function HomePage() {
       </div>
 
       {/* Scroll Section */}
-      <div className="bg-[var(--color-bg-secondary)] py-32 px-8 border-t border-[var(--color-border)]">
+      <div className="bg-[var(--color-bg-secondary)] py-32 px-4 md:px-8 border-t border-[var(--color-border)]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
           <div>
             <h3 className="font-serif text-2xl mb-4 italic">I. Browse</h3>

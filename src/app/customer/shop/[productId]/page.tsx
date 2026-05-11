@@ -57,7 +57,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             <p className="text-[var(--color-text-secondary)] leading-relaxed">{product.description || 'No description provided.'}</p>
           </div>
 
-          <div className="py-6 border-y border-[var(--color-border)] mb-8 flex justify-between items-center">
+          <div className="py-6 border-y border-[var(--color-border)] mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0">
             <div>
               <div className="text-sm text-[var(--color-text-muted)] mb-1">Availability</div>
               <div className="font-medium text-lg text-[var(--color-text-primary)]">
@@ -65,7 +65,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
             
-            <BuyNowButton productId={product.id} available={available} />
+            <div className="w-full sm:w-auto mt-2 sm:mt-0">
+              <BuyNowButton productId={product.id} available={available} />
+            </div>
           </div>
 
           {/* Seller Info */}

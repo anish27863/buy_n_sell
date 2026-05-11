@@ -43,27 +43,27 @@ export function BuyNowButton({ productId, available }: { productId: number; avai
   }
 
   return (
-    <div className="flex items-center gap-4">
-      <div className="flex items-center border border-[var(--color-border)] rounded-lg overflow-hidden">
+    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto mt-4 sm:mt-0">
+      <div className="flex items-center justify-between sm:justify-start border border-[var(--color-border)] rounded-lg overflow-hidden">
         <button
           onClick={() => setQuantity(q => Math.max(1, q - 1))}
-          className="px-3 py-2 text-[var(--color-text-secondary)] hover:bg-[var(--color-surface)] transition-colors"
+          className="px-4 py-3 sm:px-3 sm:py-2 text-[var(--color-text-secondary)] hover:bg-[var(--color-surface)] transition-colors"
         >
           −
         </button>
         <span className="px-4 py-2 text-center min-w-[3rem] font-medium">{quantity}</span>
         <button
           onClick={() => setQuantity(q => Math.min(available, q + 1))}
-          className="px-3 py-2 text-[var(--color-text-secondary)] hover:bg-[var(--color-surface)] transition-colors"
+          className="px-4 py-3 sm:px-3 sm:py-2 text-[var(--color-text-secondary)] hover:bg-[var(--color-surface)] transition-colors"
         >
           +
         </button>
       </div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 w-full sm:w-auto">
         <Button
           onClick={handleBuy}
           disabled={loading || available <= 0}
-          className="px-8 py-4 text-lg font-serif italic shadow-[0_0_20px_var(--color-accent-muted)]"
+          className="w-full sm:w-auto px-6 md:px-8 py-4 text-base md:text-lg font-serif italic shadow-[0_0_20px_var(--color-accent-muted)]"
         >
           {loading ? 'Placing...' : 'Buy Now →'}
         </Button>

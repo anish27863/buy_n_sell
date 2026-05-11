@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button';
 export default function SellerPendingPage() {
   return (
     <PageTransition>
-      <div className="min-h-screen px-8 flex items-center justify-center text-center">
+      <div className="min-h-screen px-4 md:px-8 flex items-center justify-center text-center">
         <div className="max-w-lg">
           <h1 className="text-4xl font-serif mb-6 text-[var(--color-warning)] italic">Account Pending Review.</h1>
           <p className="text-[var(--color-text-secondary)] leading-relaxed mb-8">
