@@ -7,11 +7,11 @@ export default async function AdminDashboard() {
   let stats = { users: 0, sellers: 0, pending: 0, products: 0 };
   
   try {
-    const allUsers = await db.select({ id: users.id, role: users.role }).from(users);
+    const allUsers = await db.select({ id: users.id, role: users.role, approvalStatus: users.approvalStatus }).from(users);
     const allSellers = await db.select({ id: sellerProfiles.id, status: sellerProfiles.approvalStatus }).from(sellerProfiles);
     const allProducts = await db.select({ id: products.id }).from(products).where(eq(products.isActive, true));
 
-    stats.users = allUsers.filter(u => u.role === 'customer').length;
+    stats.users = allUsers.filter(u => u.role === 'customer' && u.approvalStatus === 'approved').length;
     stats.sellers = allSellers.filter(s => s.status === 'approved').length;
     stats.pending = allSellers.filter(s => s.status === 'pending').length;
     stats.products = allProducts.length;
