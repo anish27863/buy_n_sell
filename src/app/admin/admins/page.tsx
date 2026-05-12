@@ -50,10 +50,10 @@ export default function AdminManagementPage() {
 
   return (
     <PageTransition>
-      <div className="max-w-6xl mx-auto px-4 md:px-8 py-12">
-        <header className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 border-b border-[var(--color-border)] pb-6 gap-4">
-          <h1 className="text-4xl font-serif">Admin Management</h1>
-          <Button onClick={() => setShowModal(true)} className="font-serif italic">+ Create Admin</Button>
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 md:px-8 py-6 md:py-12">
+        <header className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 md:mb-10 border-b border-[var(--color-border)] pb-3 md:pb-6 gap-3">
+          <h1 className="text-xl sm:text-2xl md:text-4xl font-serif">Admin Management</h1>
+          <Button onClick={() => setShowModal(true)} className="font-serif italic text-sm">+ Create Admin</Button>
         </header>
 
         {showModal && (
@@ -85,7 +85,23 @@ export default function AdminManagementPage() {
           </div>
         )}
 
-        <div className="overflow-x-auto bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)]">
+        {/* Mobile cards */}
+        <div className="flex flex-col gap-3 md:hidden">
+          {loading ? (
+            <div className="py-8 text-center text-[var(--color-text-muted)] italic text-sm">Loading...</div>
+          ) : admins.length === 0 ? (
+            <div className="py-8 text-center text-[var(--color-text-muted)] italic text-sm">No admins found.</div>
+          ) : admins.map(a => (
+            <div key={a.id} className="bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] p-4">
+              <div className="font-semibold text-sm">{a.username}</div>
+              <div className="text-xs text-[var(--color-text-muted)] mt-0.5">{a.email || '—'}</div>
+              <div className="text-[10px] text-[var(--color-text-muted)] mt-1">Joined {new Date(a.createdAt).toLocaleDateString()}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop table */}
+        <div className="hidden md:block overflow-x-auto bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)]">
           <table className="w-full text-left text-sm">
             <thead className="bg-[var(--color-bg-tertiary)] border-b border-[var(--color-border)] text-xs uppercase tracking-wider text-[var(--color-text-muted)]">
               <tr>
