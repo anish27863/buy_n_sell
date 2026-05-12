@@ -53,7 +53,10 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         <div className="flex flex-col">
           <div className="mb-8">
             <div className="text-sm text-[var(--color-accent)] uppercase tracking-widest mb-3 font-semibold">{product.category}</div>
-            <h1 className="text-4xl md:text-5xl font-serif leading-tight mb-6">{product.title}</h1>
+            <h1 className="text-4xl md:text-5xl font-serif leading-tight mb-4">{product.title}</h1>
+            <div className="text-2xl font-serif text-[var(--color-text-primary)] mb-6">
+              {product.mrp ? `Rs. ${Number(product.mrp).toFixed(2)}` : <span className="italic text-lg text-[var(--color-text-muted)]">Price on request</span>}
+            </div>
             <p className="text-[var(--color-text-secondary)] leading-relaxed">{product.description || 'No description provided.'}</p>
           </div>
 

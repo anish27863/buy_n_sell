@@ -69,7 +69,7 @@ export default async function AdminProductsPage() {
                     </div>
                     <div className="flex justify-between items-center mt-1">
                       <div className="text-xs text-[var(--color-text-secondary)]">
-                        {p.mrp ? `$${Number(p.mrp).toFixed(2)}` : 'Negotiate'} · qty {p.quantityAvailable}
+                        {p.mrp ? `Rs. ${Number(p.mrp).toFixed(2)}` : 'Negotiate'} · qty {p.quantityAvailable}
                       </div>
                       <AdminProductActions productId={p.id} isActive={p.isActive} />
                     </div>
@@ -107,7 +107,7 @@ export default async function AdminProductsPage() {
                       <td className="p-4 font-medium max-w-[200px] truncate">{p.title}</td>
                       <td className="p-4 text-[var(--color-text-secondary)]">{p.shopName}</td>
                       <td className="p-4 text-[var(--color-text-secondary)]">{p.category}</td>
-                      <td className="p-4 font-mono">{p.mrp ? `$${Number(p.mrp).toFixed(2)}` : '—'}</td>
+                      <td className="p-4 font-mono">{p.mrp ? `Rs. ${Number(p.mrp).toFixed(2)}` : '—'}</td>
                       <td className="p-4">{p.quantityAvailable}</td>
                       <td className="p-4">
                         <span className={`px-2 py-1 rounded text-xs font-medium uppercase tracking-wider ${

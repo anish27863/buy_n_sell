@@ -102,7 +102,7 @@ export default async function SellerDashboard() {
                   </div>
                   <div className="flex justify-between items-center text-xs text-[var(--color-text-secondary)]">
                     <span>👤 {order.customerName} · qty {order.quantity}</span>
-                    <span className="font-mono">{order.agreedPrice ? `$${Number(order.agreedPrice).toFixed(2)}` : '—'}</span>
+                    <span className="font-mono">{order.agreedPrice ? `Rs. ${Number(order.agreedPrice).toFixed(2)}` : '—'}</span>
                   </div>
                   <Link
                     href={`/seller/chat/${order.id}`}
@@ -138,7 +138,7 @@ export default async function SellerDashboard() {
                           {order.status}
                         </span>
                       </td>
-                      <td className="p-4 font-mono">{order.agreedPrice ? `$${Number(order.agreedPrice).toFixed(2)}` : '—'}</td>
+                      <td className="p-4 font-mono">{order.agreedPrice ? `Rs. ${Number(order.agreedPrice).toFixed(2)}` : '—'}</td>
                       <td className="p-4">
                         <Link
                           href={`/seller/chat/${order.id}`}

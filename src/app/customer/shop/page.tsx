@@ -179,7 +179,7 @@ export default async function ShopPage({
                         </div>
                         <div className="text-right">
                           {item.mrp ? (
-                            <span className="font-mono text-[var(--color-text-primary)] font-semibold">${Number(item.mrp).toFixed(2)}</span>
+                            <span className="font-mono text-[var(--color-text-primary)] font-semibold">Rs. {Number(item.mrp).toFixed(2)}</span>
                           ) : (
                             <span className="text-[var(--color-text-muted)] italic text-xs">Negotiate</span>
                           )}

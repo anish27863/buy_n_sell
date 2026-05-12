@@ -106,7 +106,7 @@ export default function WantFeedPage() {
                   </div>
                   {post.budget && (
                     <div className="bg-[var(--color-bg-tertiary)] px-3 py-1 rounded-md text-sm font-medium border border-[var(--color-border)] text-[var(--color-success)] shrink-0">
-                      Budget: ${Number(post.budget).toFixed(2)}
+                      Budget: Rs. {Number(post.budget).toFixed(2)}
                     </div>
                   )}
                 </div>

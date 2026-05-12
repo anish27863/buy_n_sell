@@ -158,7 +158,7 @@ export default async function SellerListings({
                       <div>
                         <div className="text-[10px] text-[var(--color-text-muted)] uppercase tracking-widest">Price</div>
                         <div className="font-mono text-[var(--color-text-primary)] font-semibold">
-                          {item.mrp ? `$${Number(item.mrp).toFixed(2)}` : 'Negotiate'}
+                          {item.mrp ? `Rs. ${Number(item.mrp).toFixed(2)}` : 'Negotiate'}
                         </div>
                       </div>
                       <div>

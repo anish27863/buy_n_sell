@@ -40,7 +40,7 @@ function PostCard({ post }: { post: Post }) {
         </div>
         {post.budget && (
           <div className="bg-[var(--color-bg-tertiary)] px-3 py-1 rounded-md text-sm font-medium border border-[var(--color-border)] shrink-0">
-            Budget: ${Number(post.budget).toFixed(2)}
+            Budget: Rs. {Number(post.budget).toFixed(2)}
           </div>
         )}
       </div>
@@ -153,7 +153,7 @@ export default function WantPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="text-xs text-[var(--color-text-muted)] uppercase tracking-widest block mb-1">Budget ($)</label>
+                    <label className="text-xs text-[var(--color-text-muted)] uppercase tracking-widest block mb-1">Budget (Rs.)</label>
                     <Input type="number" min={0} step={0.01} value={form.budget} onChange={e => setForm(f => ({ ...f, budget: e.target.value }))} placeholder="Optional" />
                   </div>
                 </div>

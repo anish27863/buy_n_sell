@@ -74,7 +74,7 @@ export default async function MyOrdersPage() {
                     {order.agreedPrice && (
                       <>
                         <span>·</span>
-                        <span className="text-[var(--color-success)]">Agreed: ${Number(order.agreedPrice).toFixed(2)}</span>
+                        <span className="text-[var(--color-success)]">Agreed: Rs. {Number(order.agreedPrice).toFixed(2)}</span>
                       </>
                     )}
                   </div>
